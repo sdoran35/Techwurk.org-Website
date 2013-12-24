@@ -1,0 +1,595 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
+
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Creatif – HTML Template</title>			
+<link rel="stylesheet" href="css/style.css" type="text/css" media="screen" />	
+<link rel="stylesheet" href="fancybox/jquery.fancybox-1.3.4.css" type="text/css" media="screen" />
+<link href='http://fonts.googleapis.com/css?family=Cuprum' rel='stylesheet' type='text/css' />
+
+<!-- Javascripts -->
+<script type="text/javascript" src="js/jquery.js"></script>
+
+<!-- Tabs -->
+<script type="text/javascript" src="js/jquery.tools.min.js"></script>
+
+<!-- jQuery UI -->
+<script type="text/javascript" src="js/jquery-ui-1.8.5.min.js"></script>
+
+<!-- Twitter -->
+<script src="js/twitter.js" type="text/javascript"></script>
+
+<!-- Google map -->
+<script src="http://maps.google.com/maps/api/js?sensor=true" type="text/javascript"></script>
+
+<!-- Scripts -->
+<script type="text/javascript" src="js/scripts.js"></script>
+
+<!-- fancy box -->
+<script type="text/javascript" src="fancybox/jquery.fancybox-1.3.4.js"></script>
+<script type="text/javascript" src="fancybox/jquery.mousewheel-3.0.4.pack.js"></script>
+
+</head>
+
+<body>
+
+<script type="text/javascript">
+  jQuery(function() {
+	
+	function mainmenu(){
+		jQuery(" #menu ul ul ").css({display: "none"}); // Opera Fix
+		jQuery(" #menu ul li").hover(function(){
+		jQuery(this).find('ul:first').css({visibility: "visible",display: "none"}).show(200);
+		},function(){
+		jQuery(this).find('ul:first').css({visibility: "hidden"});
+	});
+	}
+
+ 	jQuery(document).ready(function(){
+		mainmenu();
+	});
+	
+	/* This is basic - uses default settings */
+	$("a.project-list-thumb").fancybox();
+	
+	$("a.image").fancybox();
+	
+	$(".gallery a").fancybox();
+		
+	/* Using custom settings */
+		
+	$("a#inline").fancybox({
+			'hideOnContentClick': true
+	});
+	
+	/* Apply fancybox to multiple items */
+	$(".youtube_video").click(function() {
+		$.fancybox({
+			'padding'		: 0,
+			'autoScale'		: false,
+			'transitionIn'	: 'none',
+			'transitionOut'	: 'none',
+			'title'			: this.title,
+			'width'		    : 680,
+			'height'		: 495,
+			'href'			: this.href.replace(new RegExp("watch\\?v=", "i"), 'v/'),
+			'type'			: 'swf',
+			'swf'			: {
+			   	 'wmode'		: 'transparent',
+				'allowfullscreen'	: 'true'
+			}
+		});
+
+	return false;
+	
+	});
+	
+	$(".vimeo_video").click(function(){
+		$.fancybox({
+			'padding':0,
+			'autoScale':false,
+			'transitionIn':'none',
+			'transitionOut':'none',
+			'title':this.title,
+			'width':600,
+			'height':398,
+			'href':this.href.replace(new RegExp("([0-9])","i"),'moogaloop.swf?clip_id=$1'),'type':'swf'
+			});
+	return false;
+	
+	});
+	
+	$(".iframe").fancybox({ 
+        'type' : 'iframe' 
+    });
+	
+	$(".login_form").fancybox({
+		'titlePosition'		: 'inside',
+		'transitionIn'		: 'none',
+		'transitionOut'		: 'none'
+	});
+	
+	//When page loads...
+	$(".tab_content").hide(); //Hide all content
+	$("ul.tabs li:first").addClass("active").show(); //Activate first tab
+	$(".tab_content:first").show(); //Show first tab content
+
+	//On Click Event
+	$("ul.tabs li").click(function() {
+
+		$("ul.tabs li").removeClass("active"); //Remove any "active" class
+		$(this).addClass("active"); //Add "active" class to selected tab
+		$(".tab_content").hide(); //Hide all tab content
+
+		var activeTab = $(this).find("a").attr("href"); //Find the href attribute value to identify the active tab + content
+		$(activeTab).fadeIn(); //Fade in the active ID content
+		return false;
+	});
+	
+	//Toggle
+	jQuery(".togglebox").hide();
+	//slide up and down when click over heading 2
+	
+	jQuery("h4").click(function(){
+	// slide toggle effect set to slow you can set it to fast too.
+	jQuery(this).toggleClass("active").next(".togglebox").slideToggle("slow");
+	
+	return true;
+	
+	});
+	
+	// function search
+	var inactive = "inactive";
+    var active = "active";
+    var focused = "focused";
+
+    jQuery("label.auto_clear").each(function(){      
+        obj = document.getElementById(jQuery(this).attr("for"));
+        if((jQuery(obj).attr("type") == "text") || (obj.tagName.toLowerCase() == "textarea")){           
+            jQuery(obj).addClass(inactive);          
+            var text = jQuery(this).text();
+            jQuery(this).css("display","none");          
+            jQuery(obj).val(text);
+            jQuery(obj).focus(function(){    
+                jQuery(this).addClass(focused);
+                jQuery(this).removeClass(inactive);
+                jQuery(this).removeClass(active);                                  
+                if(jQuery(this).val() == text) jQuery(this).val("");
+            }); 
+            jQuery(obj).blur(function(){ 
+                jQuery(this).removeClass(focused);                                                    
+                if(jQuery(this).val() == "") {
+                    jQuery(this).val(text);
+                    jQuery(this).addClass(inactive);
+                } else {
+                    jQuery(this).addClass(active);       
+                };              
+            });             
+        };  
+    }); 
+	
+	// fade in #back-top
+	jQuery(function () {
+
+		// scroll body to 0px on click
+		jQuery('.backtop a').click(function () {
+			jQuery('body,html').animate({
+				scrollTop: 0
+			}, 800);
+			return false;
+		});
+	});
+	
+	var currentPosition = 0;
+	var slideWidth = 960;
+	var slides = jQuery('.slideContent');
+	var numberOfSlides = slides.length;
+
+	// Remove scrollbar in JS
+	jQuery('#slidesContainer').css('overflow', 'hidden');
+
+	// Wrap all .slides with #slideInner div
+	slides
+		.wrapAll('<div id="slideInner"></div>')
+	    // Float left to display horizontally, readjust .slides width
+		.css({
+	      'float' : 'left',
+	      'width' : slideWidth
+	});
+
+	// Set #slideInner width equal to total width of all slides
+	jQuery('#slideInner').css('width', slideWidth * numberOfSlides);
+
+	// Insert controls in the DOM
+	jQuery('#contentSlider')
+	.prepend('<span class="control" id="leftControl">Clicking moves left</span>')
+	.append('<span class="control" id="rightControl">Clicking moves right</span>');
+
+	// Hide left arrow control on first load
+	manageControls(currentPosition);
+
+	// Create event listeners for .controls clicks
+	jQuery('.control')
+	    .bind('click', function(){
+	    // Determine new position
+		currentPosition = (jQuery(this).attr('id')=='rightControl') ? currentPosition+1 : currentPosition-1;
+	    
+		// Hide / show controls
+	    manageControls(currentPosition);
+	    // Move slideInner using margin-left
+	    jQuery('#slideInner').animate({
+	      'marginLeft' : slideWidth*(-currentPosition)
+	    });
+	});
+
+	// manageControls: Hides and Shows controls depending on currentPosition
+	function manageControls(position){
+	    // Hide left arrow if position is first slide
+		if(position==0){ jQuery('#leftControl').hide() } else{ jQuery('#leftControl').show() }
+		// Hide right arrow if position is last slide
+	    if(position==numberOfSlides-1){ jQuery('#rightControl').hide() } else{ jQuery('#rightControl').show() }
+	}	
+	
+	$(".rounded-img, .rounded-img2").load(function() {
+	    $(this).wrap(function(){
+	      return '<span class="' + $(this).attr('class') + '" style="background:url(' + $(this).attr('src') + ') no-repeat center center; width: ' + $(this).width() + 'px; height: ' + $(this).height() + 'px;" />';
+	    });
+	    $(this).css("opacity","0");
+	 });
+
+  });
+</script>
+
+<div id="backtop"></div>
+
+<div id="top">
+
+	<div id="top-inner">
+		
+		<div id="topContentSection">
+		
+			<div id="topBarMenu">
+							
+				<div id="topMenu">
+					<ul>
+						<li><a href="#"><span><span>Licensing</span></span></a></li>
+						<li><a href="#"><span><span>Terms Of Usage</span></span></a></li>
+						<li><a href="#"><span><span>Support</span></span></a></li>
+					</ul>
+				</div>
+								
+			</div>
+		
+			<div id="topContent">
+				
+				<div id="logo">
+					<a href="index.html">
+						<img src="images/logo.png" alt="Logo" />
+					</a>
+				</div>
+				
+				<div id="menu">			
+				
+					<ul id="nav" class="menu">
+					
+						<li><a href="index.html"><span><span>Home</span></span></a></li>
+						<li><a href="#"><span><span>Pages</span></span></a>
+							<ul style="display: none;" class="sub-menu">
+								<li><a href="services.html"><span><span>Services</span></span></a></li>
+								<li><a href="pricing-tables.html"><span><span>Pricing Tables</span></span></a></li>
+								<li><a href="error404.html"><span><span>Error  404</span></span></a></li>
+							</ul>
+						</li>
+						<li><a href="portfolio.html"><span><span>Portfolio</span></span></a></li>
+						<li><a href="#"><span><span>Features</span></span></a>
+							<ul style="display: none;" class="sub-menu">
+								<li><a href="#"><span><span>Shortcodes</span></span></a>
+									<ul style="display: none;" class="sub-menu">
+										<li><a href="styled-list.html"><span><span>Styled Lists</span></span></a></li>
+										<li><a href="typography.html"><span><span>Typography</span></span></a></li>
+										<li><a href="columns.html"><span><span>Columns</span></span></a></li>
+										<li><a href="notifications.html"><span><span>Notifications</span></span></a></li>
+										<li><a href="tabs_and_toggles.html"><span><span>Tabs &amp; Toggles</span></span></a></li>
+									</ul>
+								</li>
+								<li><a href="#"><span><span>Layout</span></span></a>
+									<ul style="display: none;" class="sub-menu">
+										<li><a href="right_sidebar.html"><span><span>Right Sidebar</span></span></a></li>
+										<li><a href="left_sidebar.html"><span><span>Left Sidebar</span></span></a></li>
+										<li><a href="full_width.html"><span><span>Full width</span></span></a></li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+						<li><a href="blog.html"><span><span>Blog</span></span></a>
+							<ul style="display: none;" class="sub-menu">
+								<li><a href="post.html"><span><span>Post</span></span></a></li>
+							</ul>
+						</li>
+						<li><a href="contact.html"><span><span>Contact</span></span></a></li>
+					
+					</ul>
+										
+				</div>
+				
+			</div>
+
+		</div>		
+		<!-- this is index.php -->
+
+		<div id="topContentSliders">
+		
+			<div id="topContentPages">
+					
+				<h1>Right Sidebar</h1>
+								
+			</div>	
+					
+		</div>
+		
+	</div>
+		
+</div>
+	
+<div id="innerPageTop">
+
+	<div class="innerContent">
+	
+		<div class="content">
+		<!-- Content -->		
+			
+			<div id="pageBlogLeft">
+
+			<h1>Right Sidebar</h1>
+			
+			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris nec 
+			ipsum eget ipsum venenatis semper. Maecenas at lectus metus, sit amet 
+			porta nisi. Maecenas nec porta quam. Fusce a ante urna, in consectetur 
+			ipsum. Maecenas elit neque, placerat vel dignissim in, accumsan sit amet
+			 diam. Pellentesque risus risus, dapibus sit amet ornare imperdiet, 
+			commodo ut lacus. Nullam ultricies ullamcorper mi id laoreet. Fusce 
+			accumsan, est quis vestibulum vestibulum, tortor lacus consequat ante, 
+			eget vestibulum odio dui quis felis. Mauris tempor luctus vehicula. Sed 
+			id nibh in sem imperdiet interdum. Aenean lacus metus, gravida ac 
+			faucibus a, vulputate eu leo. Quisque et ligula et nisl convallis 
+			consequat et et tellus.</p>
+			
+			<p>Aenean quis quam quis sapien sagittis pretium in iaculis leo. 
+			Suspendisse potenti. Donec consequat interdum laoreet. Fusce vel leo sed
+			 massa semper adipiscing vitae et leo. Fusce ultricies tincidunt neque. 
+			Vestibulum ullamcorper ornare quam non fermentum. Vivamus ac dapibus 
+			eros. Phasellus ut purus lectus, ac viverra risus. Aliquam varius 
+			aliquet ante, quis laoreet nibh mattis in. Sed porttitor commodo 
+			facilisis. Suspendisse vitae diam nec est pulvinar auctor. Sed eleifend 
+			consectetur eros, vitae adipiscing urna dictum sit amet. Nam lectus 
+			magna, dignissim quis fringilla sit amet, dignissim et leo. Fusce congue
+			 tincidunt scelerisque. In posuere aliquet nulla, eget commodo neque 
+			sodales quis. Cras eu ullamcorper nibh. Aenean at adipiscing orci. 
+			Quisque at nisl turpis. Integer lectus lectus, sollicitudin quis 
+			suscipit in, dapibus nec nulla. Ut orci nisl, dictum nec pharetra in, 
+			convallis vel urna.</p>
+			
+			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris nec 
+			ipsum eget ipsum venenatis semper. Maecenas at lectus metus, sit amet 
+			porta nisi. Maecenas nec porta quam. Fusce a ante urna, in consectetur 
+			ipsum. Maecenas elit neque, placerat vel dignissim in, accumsan sit amet
+			 diam. Pellentesque risus risus, dapibus sit amet ornare imperdiet, 
+			commodo ut lacus. Nullam ultricies ullamcorper mi id laoreet. Fusce 
+			accumsan, est quis vestibulum vestibulum, tortor lacus consequat ante, 
+			eget vestibulum odio dui quis felis. Mauris tempor luctus vehicula. Sed 
+			id nibh in sem imperdiet interdum. Aenean lacus metus, gravida ac 
+			faucibus a, vulputate eu leo. Quisque et ligula et nisl convallis 
+			consequat et et tellus.</p>
+			
+			<p>Aenean quis quam quis sapien sagittis pretium in iaculis leo. 
+			Suspendisse potenti. Donec consequat interdum laoreet. Fusce vel leo sed
+			 massa semper adipiscing vitae et leo. Fusce ultricies tincidunt neque. 
+			Vestibulum ullamcorper ornare quam non fermentum. Vivamus ac dapibus 
+			eros. Phasellus ut purus lectus, ac viverra risus. Aliquam varius 
+			aliquet ante, quis laoreet nibh mattis in. Sed porttitor commodo 
+			facilisis. Suspendisse vitae diam nec est pulvinar auctor. Sed eleifend 
+			consectetur eros, vitae adipiscing urna dictum sit amet. Nam lectus 
+			magna, dignissim quis fringilla sit amet, dignissim et leo. Fusce congue
+			 tincidunt scelerisque. In posuere aliquet nulla, eget commodo neque 
+			sodales quis. Cras eu ullamcorper nibh. Aenean at adipiscing orci. 
+			Quisque at nisl turpis. Integer lectus lectus, sollicitudin quis 
+			suscipit in, dapibus nec nulla. Ut orci nisl, dictum nec pharetra in, 
+			convallis vel urna.</p>
+		
+			</div>
+		
+			<div id="sidebarRight">
+				<div class="widget">
+			<div class="searchForm">
+				<form method="get" id="search_block" action="#">
+					<div>
+						<label style="display: none;" for="search_field_block" class="auto_clear">Type and press enter</label>
+						<!-- end auto clear label -->
+											
+						<input value="Type and press enter" class="inactive" name="s" id="search_field_block" type="text" />
+						<!-- end search field -->
+											
+						<input id="search_submit_block" value="" type="submit" />
+					</div>	
+					<!-- end search submit -->
+				</form>
+			</div>
+		
+		</div>
+		
+		<div class="widget">
+			<ul class="tabs">
+				<li class="active"><a class="current" href="#">Popular</a></li>
+				<li><a class="" href="#">Recent</a></li>
+				<li><a class="" href="#">Comments</a></li>
+			</ul>
+
+			<div class="panes">
+				<div style="display: block;" class="pane">
+					<ul>
+						<li><div class="widget-post-thumb"><a href="#"><img style="opacity: 1;" src="images/IMG_1891-60x40-q1-left.png" alt="" /></a></div><div class="header"><a href="#">In elementum sem sit amet lacus faucibus euismod</a></div><span style="margin-top: 5px; float: left;">8 Comments</span></li>
+						
+						<li><div class="widget-post-thumb"><a href="#"><img style="opacity: 1;" src="images/Picture-090-60x40-q1-left_002.png" alt="" /></a></div><div class="header"><a href="#">Suspendisse sit amet lorem  mattis quam porttitor aliquam</a></div><span style="margin-top: 5px; float: left;">One Comment</span></li>
+						
+						<li><div class="widget-post-thumb"><a href="#"><img style="opacity: 1;" src="images/IMG_0663-60x40-q1-left.png" alt="" /></a></div><div class="header"><a href="#">Lorem ipsum dolor sit amet, consectetur adipiscing elit</a></div><span style="margin-top: 5px; float: left;">No Comments</span></li>
+						
+						<li><div class="widget-post-thumb"><a href="#"><img style="opacity: 1;" src="images/IMG_02361-60x40-q1-left.png" alt="" /></a></div><div class="header"><a href="#">Nunc lacus augue, ultrices ullamcorper imperdiet accumsan</a></div><span style="margin-top: 5px; float: left;">No Comments</span></li>
+						
+						<li><div class="widget-post-thumb"><a href="#"><img style="opacity: 1;" src="images/Picture-090-60x40-q1-left.png" alt="" /></a></div><div class="header"><a href="#">Integer a diam ultrices purus tempus malesuada</a></div><span style="margin-top: 5px; float: left;">No Comments</span></li>
+					</ul>
+				</div>
+					
+				<div style="display: none;" class="pane">
+					<ul>
+						<li><div class="widget-post-thumb"><a href="#"><img style="opacity: 1;" src="images/IMG_1891-60x40-q1-left.png" alt="" /></a></div><div class="header"><a href="#">In elementum sem sit amet lacus faucibus euismod</a></div><span style="margin-top: 5px; float: left;">September 26th, 2011</span></li>
+					
+						<li><div class="widget-post-thumb"><a href="#"><img style="opacity: 1;" src="images/IMG_06421-60x40-q1-left.png" alt="" /></a></div><div class="header"><a href="#">Donec sit amet quam quis nibh mattis sagittis</a></div><span style="margin-top: 5px; float: left;">September 26th, 2011</span></li>
+						
+						<li><div class="widget-post-thumb"><a href="#"><img style="opacity: 1;" src="images/Picture-090-60x40-q1-left.png" alt="" /></a></div><div class="header"><a href="#">Integer a diam ultrices purus tempus malesuada</a></div><span style="margin-top: 5px; float: left;">September 26th, 2011</span></li>
+						
+						<li><div class="widget-post-thumb"><a href="#"><img style="opacity: 1;" src="images/IMG_02361-60x40-q1-left.png" alt="" /></a></div><div class="header"><a href="#">Nunc lacus augue, ultrices ullamcorper imperdiet accumsan</a></div><span style="margin-top: 5px; float: left;">September 8th, 2011</span></li>
+						
+						<li><div class="widget-post-thumb"><a href="#"><img style="opacity: 1;" src="images/IMG_0663-60x40-q1-left.png" alt="" /></a></div><div class="header"><a href="#">Lorem ipsum dolor sit amet, consectetur adipiscing elit</a></div><span style="margin-top: 5px; float: left;">September 8th, 2011</span></li>
+					</ul>
+				</div>
+				
+				<div style="display: none;" class="pane">
+					<ul>
+						<li><div class="widget-post-thumb"><a href=""><img style="opacity: 1;" src="images/ba4318d3cd4b56ef331ab17c95eccf05.jpg" alt="Avatar of Alex Gurghis" class="avatar user-1-avatar" title="Alex Gurghis" height="60" width="60" /></a></div><div class="header" style="margin-bottom: 5px;"><a href="">Alex Gurghis</a> on</div> <div class="header"><a href="#" title="In elementum sem sit amet lacus faucibus euismod">In elementum sem sit amet lacus faucibus euismod</a></div></li>
+						
+						<li><div class="widget-post-thumb"><a href=""><img style="opacity: 1;" src="images/ba4318d3cd4b56ef331ab17c95eccf05.jpg" alt="Avatar of Alex Gurghis" class="avatar user-1-avatar" title="Alex Gurghis" height="60" width="60" /></a></div><div class="header" style="margin-bottom: 5px;"><a href="">Alex Gurghis</a> on</div> <div class="header"><a href="#" title="In elementum sem sit amet lacus faucibus euismod">In elementum sem sit amet lacus faucibus euismod</a></div></li>
+						
+						<li><div class="widget-post-thumb"><a href=""><img style="opacity: 1;" src="images/ba4318d3cd4b56ef331ab17c95eccf05.jpg" alt="Avatar of Alex Gurghis" class="avatar user-1-avatar" title="Alex Gurghis" height="60" width="60" /></a></div><div class="header" style="margin-bottom: 5px;"><a href="">Alex Gurghis</a> on</div> <div class="header"><a href="#" title="In elementum sem sit amet lacus faucibus euismod">In elementum sem sit amet lacus faucibus euismod</a></div></li>
+						
+						<li><div class="widget-post-thumb"><a href="http://www.wpcrown.com/"><img style="opacity: 1;" alt="" src="images/0f121d76e159d01c82db7975704de6d0.jpg" class="avatar avatar-60 photo" height="60" width="60" /></a></div><div class="header" style="margin-bottom: 5px;"><a href="http://www.wpcrown.com/">Alex</a> on</div> <div class="header"><a href="#" title="In elementum sem sit amet lacus faucibus euismod">In elementum sem sit amet lacus faucibus euismod</a></div></li>
+						
+						<li><div class="widget-post-thumb"><a href=""><img style="opacity: 1;" src="images/ba4318d3cd4b56ef331ab17c95eccf05.jpg" alt="Avatar of Alex Gurghis" class="avatar user-1-avatar" title="Alex Gurghis" height="60" width="60" /></a></div><div class="header" style="margin-bottom: 5px;"><a href="">Alex Gurghis</a> on</div> <div class="header"><a href="#" title="In elementum sem sit amet lacus faucibus euismod">In elementum sem sit amet lacus faucibus euismod</a></div></li>
+					</ul>
+				</div>
+				
+			</div>
+		</div>
+		
+		<div class="widget">
+			<span class="widget-title">Tags</span>
+			<div class="tagcloud">
+				<span class="st_tag"><a href="#">Business</a></span>
+				<span class="st_tag"><a href="#">Design</a></span>
+				<span class="st_tag"><a href="#">Elegant</a></span>
+				<span class="st_tag"><a href="#">Free</a></span>
+				<span class="st_tag"><a href="#">Premium</a></span>
+				<span class="st_tag"><a href="#">Theme</a></span>
+				<span class="st_tag"><a href="#">Themes</a></span>
+				<span class="st_tag"><a href="#">WordPress</a></span>
+			</div>
+		</div>
+		
+			</div>
+	  
+			<!-- End Content -->
+		</div>
+	  
+	</div>
+	
+</div>	
+
+<div id="footer">
+
+	<div id="footerShadow">
+		
+		<div id="innerFooter">
+		
+			<div id="footer-sidebar">
+			
+				<div id="footer-widget-logo">
+					<div id="footer-logo">
+						<a href="index.html"><img src="images/logo.png" alt="Logo" /></a>
+					</div>
+					<p>Premium HTML Template from <a href="http://www.wpcrown.com/">WPCrown.com</a></p>
+				</div>
+					
+				<div class="widget">
+					<span class="widget-title">Recent Tweets</span>
+					<ul id="twitter">
+						<li><p>WPCrown Affiliate - <a href="http://t.co/QBNlXvny" rel="nofollow">http://t.co/QBNlXvny</a></p></li>
+					</ul>
+				</div>
+					
+				<div class="widgetflickr">
+					<span class="widget-title">PhotoStream</span>
+					<ul class="flickr">
+						<li> </li>
+					</ul>
+					<br class="clear" /><br class="clear" />
+				</div>
+			</div>
+			
+			<div class="h-line"></div>
+	
+			<div id="copyright">
+				<p>2011 All Rights Reserved.</p>
+			</div>
+			
+			<div class="backtop">
+				<div id="wpcrown">Designed by <a href="http://www.wpcrown.com/">WPCrown</a></div>
+			</div>	
+			
+		</div>
+
+	</div>
+
+</div>
+	
+<!-- This JavaScript snippet activates those tabs -->
+<script type="text/javascript">
+
+	// perform JavaScript after the document is scriptable.
+	$(function() {
+	    // setup ul.tabs to work as tabs for each div directly under div.panes
+	   $("ul.tabs").tabs("div.panes > div");
+	});
+	
+	// set up variables
+	// visit http://idgettr.com to get your id
+	var flickrID = "73818667@N00";
+	var photosPerPage = "8";
+	// end	
+	
+	$.getJSON("http://api.flickr.com/services/feeds/photos_public.gne?id=" + flickrID + "&format=json&jsoncallback=?", displayImages);
+	function displayImages(data) {
+
+    // Start putting together the HTML string
+    var htmlString = "";
+	
+	
+    
+    // Now start cycling through our array of Flickr photo details
+    $.each(data.items, function(i,item){
+    
+        if (i < photosPerPage){
+		    // I only want the ickle square thumbnails
+		    var sourceSquare = (item.media.m).replace("_m.jpg", "_s.jpg");
+			var sourceBig = (item.media.m).replace("_m.jpg", ".jpg");
+		        
+		    // Here's where we piece together the HTML
+		    htmlString += '<li><a class="image" href="' + sourceBig + '">';
+		    htmlString += '<img title="' + item.title + '" src="' + sourceSquare;
+		    htmlString += '" alt="'; htmlString += item.title + '" />';
+		    htmlString += '</a></li>';
+		}
+    
+    });
+    
+    // Pop our HTML in the #images DIV
+    $('.flickr').html(htmlString);
+    
+    // Close down the JSON function call
+}</script>
+
+<!-- twitter -->
+<script src="http://www.twitter.com/statuses/user_timeline/wpcrown.json?callback=twitterCallback1&amp;count=4" type="text/javascript"></script>
+
+</body>
+</html>
